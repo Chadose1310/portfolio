@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Détail Projet — Listify</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #1e0038 0%, #3a0ca3 100%);
+      color: #200030;
+      line-height: 1.6;
+    }
+
+    /* Navigation fixe */
+    .project-nav {
+      background: rgba(123, 44, 191, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 1rem 2rem;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      transition: all 0.3s ease;
+    }
+
+    .nav-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .retour-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #fff;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 25px;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 0.8rem 1.5rem;
+      text-decoration: none;
+      border: 2px solid transparent;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .retour-btn:hover {
+      background: #fff;
+      color: #7b2cbf;
+      border-color: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .project-breadcrumb {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 0.9rem;
+    }
+
+    /* Wrapper principale */
+    .project-detail-wrapper {
+      background: #fff;
+      max-width: 900px;
+      margin: 120px auto 60px auto;
+      border-radius: 24px;
+      box-shadow: 0 20px 60px rgba(123, 88, 195, 0.2);
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 0.8s ease 0.3s forwards;
+    }
+
+    /* Hero section */
+    .project-hero {
+      background: linear-gradient(135deg, #7b58c3 0%, #a58cef 100%);
+      padding: 3rem 2rem;
+      text-align: center;
+      color: white;
+      position: relative;
+    }
+
+    .project-category {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .project-title {
+      font-size: 3rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+      letter-spacing: 1px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .project-subtitle {
+      font-size: 1.3rem;
+      opacity: 0.9;
+      font-weight: 500;
+      margin-bottom: 2rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .project-tech-tags {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .tech-tag {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      padding: 0.5rem 1rem;
+      border-radius: 15px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .tech-tag:hover {
+      background: rgba(255, 255, 255, 0.25);
+      transform: translateY(-2px);
+    }
+
+    .project-content {
+      padding: 3rem 2.5rem;
+    }
+
+    .content-section {
+      margin-bottom: 3rem;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: slideUp 0.6s ease forwards;
+    }
+
+    .content-section:nth-child(2) { animation-delay: 0.2s; }
+    .content-section:nth-child(3) { animation-delay: 0.4s; }
+    .content-section:nth-child(4) { animation-delay: 0.6s; }
+
+    .section-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #281149;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .section-title i {
+      color: #7b58c3;
+      font-size: 1.5rem;
+    }
+
+    .section-bar {
+      width: 60px;
+      height: 4px;
+      background: linear-gradient(90deg, #7b58c3 0%, #c5bfff 100%);
+      border-radius: 4px;
+      margin-bottom: 1.5rem;
+    }
+
+    .description-text {
+      font-size: 1.1rem;
+      color: #624494;
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .feature-item {
+      background: rgba(180, 151, 254, 0.05);
+      padding: 1.5rem;
+      border-radius: 15px;
+      border-left: 4px solid #7b58c3;
+      transition: all 0.3s ease;
+    }
+
+    .feature-item:hover {
+      background: rgba(180, 151, 254, 0.1);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(180, 151, 254, 0.2);
+    }
+
+    .feature-item i {
+      color: #7b58c3;
+      font-size: 1.3rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .feature-item h4 {
+      color: #281149;
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .feature-item p {
+      color: #624494;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    /* Vidéo section */
+    .video-section {
+      background: linear-gradient(135deg, #7b58c3 0%, #a58cef 100%);
+      border-radius: 20px;
+      padding: 2.5rem;
+      text-align: center;
+      margin: 3rem 0;
+    }
+
+    .video-title {
+      color: #fff;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.8rem;
+    }
+
+    .video-container {
+      position: relative;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .video-container video {
+      width: 100%;
+      height: auto;
+      display: block;
+      min-height: 320px;
+    }
+
+    .project-navigation {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 2rem 0;
+      border-top: 1px solid rgba(180, 151, 254, 0.2);
+      margin-top: 3rem;
+    }
+
+    .nav-project {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      text-decoration: none;
+      color: #624494;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+
+    .nav-project:hover {
+      color: #7b58c3;
+    }
+
+    .nav-project i {
+      font-size: 1.2rem;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .project-nav {
+        padding: 1rem;
+      }
+
+      .nav-content {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+      }
+
+      .project-detail-wrapper {
+        margin: 140px 1rem 40px 1rem;
+      }
+
+      .project-hero {
+        padding: 2rem 1rem;
+      }
+
+      .project-title {
+        font-size: 2.2rem;
+      }
+
+      .project-content {
+        padding: 2rem 1.5rem;
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .project-navigation {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+      }
+
+      .video-container video {
+        min-height: 180px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="project-nav">
+    <div class="nav-content">
+      <a href="index.html#projet" class="retour-btn">
+        <i class="fas fa-arrow-left"></i>
+        Retour aux projets
+      </a>
+      <div class="project-breadcrumb">Portfolio > Projets > Listify</div>
+    </div>
+  </nav>
+
+  <div class="project-detail-wrapper">
+    <div class="project-hero">
+      <div class="project-category">Application Web</div>
+      <h1 class="project-title">Listify</h1>
+      <p class="project-subtitle">
+        Gestionnaire de listes de courses développé en PHP/Symfony avec statistiques et espace d'administration.
+      </p>
+      <div class="project-tech-tags">
+        <span class="tech-tag">PHP</span>
+        <span class="tech-tag">Symfony</span>
+        <span class="tech-tag">MySQL</span>
+        <span class="tech-tag">Bootstrap</span>
+      </div>
+    </div>
+
+    <div class="project-content">
+      <div class="content-section">
+        <h2 class="section-title"><i class="fas fa-info-circle"></i> À propos du projet</h2>
+        <div class="section-bar"></div>
+        <p class="description-text">
+          Listify est une application web conçue pour simplifier l'organisation des courses au quotidien. Elle permet aux utilisateurs de créer et gérer plusieurs listes de courses, de suivre leur progression et d'analyser leurs habitudes d'achat.
+        </p>
+        <p class="description-text">
+          Ce projet m'a permis d'approfondir mes compétences en développement full-stack avec Symfony, la conception de bases de données relationnelles, et la création d'interfaces utilisateur intuitives.
+        </p>
+      </div>
+
+      <div class="content-section">
+        <h2 class="section-title"><i class="fas fa-cogs"></i> Fonctionnalités principales</h2>
+        <div class="section-bar"></div>
+        <div class="features-grid">
+          <div class="feature-item">
+            <i class="fas fa-list-ul"></i>
+            <h4>Gestion des listes</h4>
+            <p>Création et gestion de multiples listes de courses avec ajout/suppression d'articles</p>
+          </div>
+          <div class="feature-item">
+            <i class="fas fa-check-circle"></i>
+            <h4>Suivi d'avancement</h4>
+            <p>Système de cochage pour suivre l'avancement des courses en temps réel</p>
+          </div>
+          <div class="feature-item">
+            <i class="fas fa-chart-bar"></i>
+            <h4>Statistiques détaillées</h4>
+            <p>Visualisation des articles les plus achetés et estimation des dépenses</p>
+          </div>
+          <div class="feature-item">
+            <i class="fas fa-user-shield"></i>
+            <h4>Espace administration</h4>
+            <p>Interface sécurisée pour ajouter, modifier ou supprimer des produits</p>
+          </div>
+          <div class="feature-item">
+            <i class="fas fa-users"></i>
+            <h4>Gestion des utilisateurs</h4>
+            <p>Système d'authentification avec profils utilisateurs personnalisés</p>
+          </div>
+          <div class="feature-item">
+            <i class="fas fa-mobile-alt"></i>
+            <h4>Interface responsive</h4>
+            <p>Design adaptatif optimisé pour desktop, tablette et mobile</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-section">
+        <div class="video-section">
+          <h2 class="video-title">
+            <i class="fas fa-play-circle"></i>
+            Démonstration de l'application
+          </h2>
+          <div class="video-container">
+            <video controls preload="metadata">
+              <source src="listify.mp4" type="video/mp4">
+              <source src="listify.webm" type="video/webm">
+              Votre navigateur ne supporte pas la lecture de vidéos HTML5.
+            </video>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-navigation">
+        <a href="shoesify.html" class="nav-project">
+          <i class="fas fa-chevron-left"></i>
+          <span>Projet précédent: Shoesify</span>
+        </a>
+        <a href="ball.html" class="nav-project">
+          <span>Retour au premier: Ball n'connect</span>
+          <i class="fas fa-chevron-right"></i>
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+</html>

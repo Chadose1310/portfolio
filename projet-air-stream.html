@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Détail Projet — Air-Stream</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* --- DESIGN GLOBAL EN ACCORD AVEC TON THEME --- */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to bottom, #1e0038, #3a0ca3);
+      color: #200030;
+    }
+    .detail-wrapper {
+      background: #fff;
+      max-width: 850px;
+      margin: 50px auto 40px auto;
+      border-radius: 24px;
+      box-shadow: 0 3px 36px #7c58d520;
+      padding: 34px 28px 45px 28px;
+    }
+    .detail-title {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #2d102d;
+      text-align: center;
+      margin-bottom: 22px;
+      letter-spacing: 0.8px;
+    }
+    .detail-bar {
+      width: 70px;
+      height: 6px;
+      border-radius: 6px;
+      background: #b89fff;
+      margin: 0 auto 35px auto;
+      display: block;
+      opacity: 0.92;
+    }
+    .detail-desc-general {
+      text-align: center;
+      font-size: 1.23rem;
+      color: #624494;
+      font-weight: 600;
+      margin-bottom: 32px;
+    }
+    .detail-desc-long {
+      font-size: 1.12rem;
+      color: #3c266d;
+      background: #f5f1fc;
+      padding: 18px 22px;
+      border-radius: 14px;
+      margin: 0 0 42px 0;
+      line-height: 1.55;
+      box-shadow: 0 1px 15px #bfb8ed23;
+    }
+    .detail-video-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: linear-gradient(135deg,#6647c1 65%, #d4c6ff 100%);
+      border-radius: 20px;
+      box-shadow: 0 6px 36px #624ad338;
+      padding: 26px 20px 20px 20px;
+      margin: 0 auto;
+      max-width: 650px;
+    }
+    .detail-video-title {
+      color: #fff;
+      font-size: 1.28rem;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+      margin-bottom: 14px;
+      text-shadow: 0 1px 10px #4d377780;
+    }
+    .detail-video-box video {
+      border-radius: 14px;
+      width: 100%;
+      max-width: 550px;
+      box-shadow: 0 2px 14px #37216622;
+      background: #130922;
+    }
+    @media (max-width: 700px) {
+      .detail-wrapper {padding: 14px 3vw;}
+      .detail-title {font-size: 2rem;}
+      .detail-video-box {padding: 12px 2vw;}
+    }
+
+    .retour-btn {
+  display: inline-block;
+  color: #5e3dc6;
+  background: #ece4fb;
+  border-radius: 22px;
+  font-weight: bold;
+  font-size: 1rem;
+  padding: 10px 26px;
+  margin-bottom: 2vh;
+  margin-top: 2vh;
+  margin-left: 3vw;
+  text-decoration: none;
+  box-shadow: 0 3px 14px #a085ec10;
+  border: 2px solid #c6b5ef;
+  transition: background 0.16s, color 0.16s, border 0.2s, transform 0.16s;
+}
+.retour-btn:hover, .retour-btn:focus {
+  background: #7b2cbf;
+  color: #fff;
+  border-color: #a992eb;
+  transform: translateY(-2px) scale(1.04);
+  text-decoration: none;
+}
+
+  </style>
+</head>
+<body>
+    <a href="index.html#projet" class="retour-btn">&#8592; Retour aux projets</a>
+
+  <div class="detail-wrapper">
+
+    <h1 class="detail-title">Air-Stream</h1>
+    <span class="detail-bar"></span>
+
+    <div class="detail-desc-general">
+      Application de gestion de vols permettant de visualiser des itinéraires sur une carte et de consulter des graphes de connexions entre différentes destinations.
+    </div>
+    
+    <div class="detail-desc-long">
+      Air-Stream est une application développée en Java avec pour objectif d’aider les voyageurs ou professionnels du transport à analyser et à préparer leurs itinéraires de vol. Elle permet d’afficher en temps réel la carte de France des principaux aéroports, d’importer des graphes de connexions aériennes, de rechercher la meilleure route entre deux points, d’explorer les données de vols et de générer des rapports personnalisés selon différents critères. Le design met l’accent sur l’ergonomie et la clarté de présentation des données.
+    </div>
+
+    <div class="detail-video-box">
+      <div class="detail-video-title">Vidéo de démonstration</div>
+      <!-- Mets ici ton fichier vidéo ou ta démo Youtube/Vimeo, exemple : -->
+      <video src="air-stream-demo.mp4" controls poster="air-stream-poster.jpg"></video>
+    </div>
+  
+  </div>
+</body>
+</html>

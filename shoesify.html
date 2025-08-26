@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Détail Projet — Shoesify</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #1e0038 0%, #3a0ca3 100%);
+      color: #200030;
+      line-height: 1.6;
+    }
+
+    /* Navigation fixe */
+    .project-nav {
+      background: rgba(123, 44, 191, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 1rem 2rem;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      transition: all 0.3s ease;
+    }
+
+    .nav-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .retour-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #fff;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 25px;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 0.8rem 1.5rem;
+      text-decoration: none;
+      border: 2px solid transparent;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .retour-btn:hover {
+      background: #fff;
+      color: #7b2cbf;
+      border-color: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .project-breadcrumb {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 0.9rem;
+    }
+
+    /* Wrapper principale */
+    .project-detail-wrapper {
+      background: #fff;
+      max-width: 900px;
+      margin: 120px auto 60px auto;
+      border-radius: 24px;
+      box-shadow: 0 20px 60px rgba(123, 88, 195, 0.2);
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 0.8s ease 0.3s forwards;
+    }
+
+    /* Hero section */
+    .project-hero {
+      background: linear-gradient(135deg, #7b58c3 0%, #a58cef 100%);
+      padding: 3rem 2rem;
+      text-align: center;
+      color: white;
+      position: relative;
+    }
+
+    .project-category {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .project-title {
+      font-size: 3rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+      letter-spacing: 1px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .project-subtitle {
+      font-size: 1.3rem;
+      opacity: 0.9;
+      font-weight: 500;
+      margin-bottom: 2rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .project-tech-tags {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .tech-tag {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      padding: 0.5rem 1rem;
+      border-radius: 15px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .tech-tag:hover {
+      background: rgba(255, 255, 255, 0.25);
+      transform: translateY(-2px);
+    }
+
+    .project-content {
+      padding: 3rem 2.5rem;
+    }
+
+    .content-section {
+      margin-bottom: 3rem;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: slideUp 0.6s ease forwards;
+    }
+
+    .content-section:nth-child(2) { animation-delay: 0.2s; }
+    .content-section:nth-child(3) { animation-delay: 0.4s; }
+    .content-section:nth-child(4) { animation-delay: 0.6s; }
+
+    .section-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #281149;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .section-title i {
+      color: #7b58c3;
+      font-size: 1.5rem;
+    }
+
+    .section-bar {
+      width: 60px;
+      height: 4px;
+      background: linear-gradient(90deg, #7b58c3 0%, #c5bfff 100%);
+      border-radius: 4px;
+      margin-bottom: 1.5rem;
+    }
+
+    .description-text {
+      font-size: 1.1rem;
+      color: #624494;
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .feature-item {
+      background: rgba(180, 151, 254, 0.05);
+      padding: 1.5rem;
+      border-radius: 15px;
+      border-left: 4px solid #7b58c3;
+      transition: all 0.3s ease;
+    }
+
+    .feature-item:hover {
+      background: rgba(180, 151, 254, 0.1);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(180, 151, 254, 0.2);
+    }
+
+    .feature-item i {
+      color: #7b58c3;
+      font-size: 1.3rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .feature-item h4 {
+      color: #281149;
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .feature-item p {
+      color: #624494;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .detail-video-box {
+      background: linear-gradient(135deg,#6647c1 65%, #d4c6ff 100%);
+      border-radius: 20px;
+      box-shadow: 0 6px 36px #624ad338;
+      padding: 26px 20px 20px 20px;
+      margin: 0 auto;
+      max-width: 650px;
+      text-align: center;
+    }
+
+    .detail-video-title {
+      color: #fff;
+      font-size: 1.28rem;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+      margin-bottom: 14px;
+      text-shadow: 0 1px 10px #4d377780;
+    }
+
+    .detail-video-box video {
+      border-radius: 14px;
+      width: 100%;
+      max-width: 550px;
+      box-shadow: 0 2px 14px #37216622;
+      background: #130922;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .project-navigation {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 2rem 0;
+      border-top: 1px solid rgba(180, 151, 254, 0.2);
+      margin-top: 3rem;
+    }
+
+    .nav-project {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      text-decoration: none;
+      color: #624494;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+
+    .nav-project:hover {
+      color: #7b58c3;
+    }
+
+    .nav-project i {
+      font-size: 1.2rem;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .project-nav {
+        padding: 1rem;
+      }
+
+      .nav-content {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+      }
+
+      .project-detail-wrapper {
+        margin: 140px 1rem 40px 1rem;
+      }
+
+      .project-hero {
+        padding: 2rem 1rem;
+      }
+
+      .project-title {
+        font-size: 2.2rem;
+      }
+
+      .project-content {
+        padding: 2rem 1.5rem;
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .project-navigation {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="project-nav">
+    <div class="nav-content">
+      <a href="index.html#projet" class="retour-btn">
+        <i class="fas fa-arrow-left"></i>
+        Retour aux projets
+      </a>
+      <div class="project-breadcrumb">Portfolio > Projets > Shoesify</div>
+    </div>
+  </nav>
+
+  <div class="project-detail-wrapper">
+    <div class="project-hero">
+      <div class="project-category">E-commerce</div>
+      <h1 class="project-title">Shoesify</h1>
+      <p class="project-subtitle">
+        Boutique en ligne créée avec React et MongoDB dans le cadre d’un projet d’équipe international.
+      </p>
+      <div class="project-tech-tags">
+        <span class="tech-tag">React</span>
+        <span class="tech-tag">MongoDB</span>
+        <span class="tech-tag">Node.js</span>
+        <span class="tech-tag">Express</span>
+      </div>
+    </div>
+
+    <div class="project-content">
+      <div class="content-section">
+        <h2 class="section-title"><i class="fas fa-info-circle"></i> À propos du projet</h2>
+        <div class="section-bar"></div>
+        <p class="description-text">
+          Shoesify est une boutique en ligne conçue dans un cadre international pour apprendre à intégrer MongoDB dans une application React full-stack.
+        </p>
+        <p class="description-text">
+          Le projet inclut la gestion de produits, des utilisateurs, des commandes et des avis, ainsi qu’un tutoriel en anglais pour montrer le fonctionnement de la base NoSQL.
+        </p>
+      </div>
+
+      <div class="content-section">
+        <h2 class="section-title"><i class="fas fa-cogs"></i> Fonctionnalités principales</h2>
+        <div class="section-bar"></div>
+        <div class="features-grid">
+          <div class="feature-item">
+            <i class="fas fa-box-open"></i>
+            <h4>Gestion du catalogue</h4>
+            <p>Ajout, modification et suppression des produits avec images et descriptions</p>
+          </div>
+          <div class="feature-item">
+            <i class="fas fa-user-friends"></i>
+            <h4>Gestion des utilisateurs</h4>
+            <p>Inscription, connexion, et gestion sécurisée des profils utilisateurs</p>
+          </div>
+          <div class="feature-item">
+            <i class="fas fa-shopping-cart"></i>
+            <h4>Gestion des commandes</h4>
+            <p>Traçage complet des commandes, paiement intégré et historique</p>
+          </div>
+          <div class="feature-item">
+            <i class="fas fa-comments"></i>
+            <h4>Avis clients</h4>
+            <p>Système de notation et d’avis pour chaque produit</p>
+          </div>
+          <div class="feature-item">
+            <i class="fas fa-truck"></i>
+            <h4>Suivi de livraison</h4>
+            <p>Mise à jour en temps réel de l’état des livraisons</p>
+          </div>
+          <div class="feature-item">
+            <i class="fas fa-dollar-sign"></i>
+            <h4>Gestion des paiements</h4>
+            <p>Intégration sécurisée avec différentes méthodes de paiement</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-section">
+        <div class="video-section">
+          <h2 class="video-title"><i class="fas fa-play-circle"></i> Démonstration du site</h2>
+          <div class="video-container">
+            <video src="shoesify.mp4" controls preload="metadata"></video>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-navigation">
+        <a href="challenger.html" class="nav-project"><i class="fas fa-chevron-left"></i> Projet précédent: Challenger</a>
+        <a href="listify.html" class="nav-project">Projet suivant: Listify <i class="fas fa-chevron-right"></i></a>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
