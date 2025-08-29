@@ -172,6 +172,7 @@
     .content-section:nth-child(2) { animation-delay: 0.2s; }
     .content-section:nth-child(3) { animation-delay: 0.4s; }
     .content-section:nth-child(4) { animation-delay: 0.6s; }
+    .content-section:nth-child(5) { animation-delay: 0.8s; }
 
     @keyframes slideUp {
       to {
@@ -249,6 +250,86 @@
       color: #624494;
       font-size: 0.95rem;
       line-height: 1.5;
+    }
+
+    /* NOUVELLE SECTION - Compétences mobilisées */
+    .competences-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+
+    .competence-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.2rem;
+      padding: 2rem;
+      background: rgba(180, 151, 254, 0.03);
+      border-radius: 18px;
+      border: 2px solid rgba(180, 151, 254, 0.1);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .competence-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: linear-gradient(180deg, #7b58c3 0%, #a58cef 100%);
+      transition: width 0.3s ease;
+    }
+
+    .competence-item:hover {
+      background: rgba(180, 151, 254, 0.08);
+      border-color: rgba(180, 151, 254, 0.2);
+      transform: translateY(-5px);
+      box-shadow: 0 12px 35px rgba(180, 151, 254, 0.15);
+    }
+
+    .competence-item:hover::before {
+      width: 6px;
+    }
+
+    .competence-icon {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #7b58c3 0%, #a58cef 100%);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      color: white;
+      flex-shrink: 0;
+      box-shadow: 0 8px 20px rgba(123, 88, 195, 0.3);
+      transition: transform 0.3s ease;
+    }
+
+    .competence-item:hover .competence-icon {
+      transform: scale(1.1) rotate(5deg);
+    }
+
+    .competence-content {
+      flex: 1;
+    }
+
+    .competence-content h4 {
+      color: #281149;
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 0.8rem;
+      line-height: 1.3;
+    }
+
+    .competence-content p {
+      color: #624494;
+      font-size: 1rem;
+      line-height: 1.6;
     }
 
     /* Vidéo section */
@@ -354,8 +435,14 @@
         padding: 2rem 1.5rem;
       }
       
-      .features-grid {
+      .features-grid, .competences-grid {
         grid-template-columns: 1fr;
+      }
+      
+      .competence-item {
+        flex-direction: column;
+        text-align: center;
+        padding: 1.5rem;
       }
       
       .project-navigation {
@@ -464,6 +551,61 @@
         </div>
       </div>
 
+      <!-- NOUVELLE SECTION - Compétences mobilisées -->
+<!-- NOUVELLE SECTION - Compétences mobilisées -->
+<div class="content-section">
+  <h2 class="section-title">
+    <i class="fas fa-graduation-cap"></i>
+    Compétences mobilisées
+  </h2>
+  <div class="section-bar"></div>
+  
+  <div class="competences-grid">
+    <div class="competence-item">
+      <div class="competence-icon">
+        <i class="fas fa-code"></i>
+      </div>
+      <div class="competence-content">
+        <h4>Réaliser un développement d'application</h4>
+        <p>Conception et développement de l'application Android avec Kotlin, intégration des API et gestion des données utilisateur en temps réel.</p>
+      </div>
+    </div>
+
+    <div class="competence-item">
+      <div class="competence-icon">
+        <i class="fas fa-tachometer-alt"></i>
+      </div>
+      <div class="competence-content">
+        <h4>Optimiser des applications informatiques</h4>
+        <p>Amélioration des performances de géolocalisation et optimisation de l'interface utilisateur pour une expérience fluide et responsive.</p>
+      </div>
+    </div>
+
+    <div class="competence-item">
+      <div class="competence-icon">
+        <i class="fas fa-network-wired"></i>
+      </div>
+      <div class="competence-content">
+        <h4>Administrer des systèmes informatiques communicants complexes</h4>
+        <p>Configuration et gestion de Firebase, intégration des services Google Maps et synchronisation des données entre utilisateurs.</p>
+      </div>
+    </div>
+
+    <div class="competence-item">
+      <div class="competence-icon">
+        <i class="fas fa-database"></i>
+      </div>
+      <div class="competence-content">
+        <h4>Gérer des données de l'information</h4>
+        <p>Structuration et gestion de bases de données Firebase, traitement des informations géographiques et optimisation des requêtes de données.</p>
+      </div>
+    </div>
+
+    
+  </div>
+</div>
+
+
       <!-- Démonstration vidéo -->
       <div class="content-section">
         <div class="video-section">
@@ -472,7 +614,7 @@
             Démonstration de l'application
           </h2>
           <div class="video-container">
-            <video controls poster="ball-poster.jpg">
+            <video controls preload="metadata">
               <source src="kotlin.mp4" type="video/mp4">
               Votre navigateur ne supporte pas la lecture de vidéos.
             </video>
@@ -494,6 +636,59 @@
 
     </div>
   </div>
+
+  <!-- JavaScript pour les animations -->
+  <script>
+    // Animations pour la page projet
+    document.addEventListener('DOMContentLoaded', function() {
+      
+      // Intersection Observer pour les sections
+      const sections = document.querySelectorAll('.content-section');
+      
+      const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate');
+          }
+        });
+      }, {
+        threshold: 0.2,
+        rootMargin: '0px 0px -50px 0px'
+      });
+      
+      sections.forEach(section => {
+        sectionObserver.observe(section);
+      });
+      
+      // Animation des compétences au hover
+      const competenceItems = document.querySelectorAll('.competence-item');
+      competenceItems.forEach(item => {
+        item.addEventListener('mouseenter', function() {
+          const icon = this.querySelector('.competence-icon');
+          icon.style.transform = 'scale(1.15) rotate(10deg)';
+        });
+        
+        item.addEventListener('mouseleave', function() {
+          const icon = this.querySelector('.competence-icon');
+          icon.style.transform = 'scale(1) rotate(0deg)';
+        });
+      });
+      
+      // Animation des feature items
+      const featureItems = document.querySelectorAll('.feature-item');
+      featureItems.forEach(item => {
+        item.addEventListener('mouseenter', function() {
+          const icon = this.querySelector('i');
+          icon.style.transform = 'scale(1.2) rotate(360deg)';
+        });
+        
+        item.addEventListener('mouseleave', function() {
+          const icon = this.querySelector('i');
+          icon.style.transform = 'scale(1) rotate(0deg)';
+        });
+      });
+    });
+  </script>
 
 </body>
 </html>

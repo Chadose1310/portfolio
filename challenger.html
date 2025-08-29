@@ -335,6 +335,107 @@
         text-align: center;
       }
     }
+
+    /* SECTION COMPÉTENCES MOBILISÉES POUR CHALLENGER */
+.competences-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.8rem;
+  margin: 2rem 0;
+}
+
+.competence-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.2rem;
+  padding: 1.8rem;
+  background: rgba(180, 151, 254, 0.03);
+  border-radius: 18px;
+  border: 2px solid rgba(180, 151, 254, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.competence-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(180deg, #7b58c3 0%, #a58cef 100%);
+  transition: width 0.3s ease;
+}
+
+.competence-item:hover {
+  background: rgba(180, 151, 254, 0.08);
+  border-color: rgba(180, 151, 254, 0.2);
+  transform: translateY(-5px);
+  box-shadow: 0 12px 35px rgba(180, 151, 254, 0.15);
+}
+
+.competence-item:hover::before {
+  width: 6px;
+}
+
+.competence-icon {
+  width: 55px;
+  height: 55px;
+  background: linear-gradient(135deg, #7b58c3 0%, #a58cef 100%);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  color: white;
+  flex-shrink: 0;
+  box-shadow: 0 8px 20px rgba(123, 88, 195, 0.3);
+  transition: transform 0.3s ease;
+}
+
+.competence-item:hover .competence-icon {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.competence-content {
+  flex: 1;
+}
+
+.competence-content h4 {
+  color: #281149;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 0.7rem;
+  line-height: 1.3;
+}
+
+.competence-content p {
+  color: #624494;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* Responsive pour les compétences */
+@media (max-width: 768px) {
+  .competences-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .competence-item {
+    flex-direction: column;
+    text-align: center;
+    padding: 1.5rem;
+  }
+  
+  .competence-icon {
+    width: 60px;
+    height: 60px;
+    font-size: 1.4rem;
+  }
+}
+
   </style>
 </head>
 <body>
@@ -413,6 +514,68 @@
         </div>
       </div>
 
+      <!-- Compétences mobilisées -->
+<div class="content-section">
+  <h2 class="section-title">
+    <i class="fas fa-graduation-cap"></i>
+    Compétences mobilisées
+  </h2>
+  <div class="section-bar"></div>
+  
+  <div class="competences-grid">
+    <div class="competence-item">
+      <div class="competence-icon">
+        <i class="fas fa-code"></i>
+      </div>
+      <div class="competence-content">
+        <h4>Réaliser un développement d'application</h4>
+        <p>Développement de la plateforme web avec React et PHP, intégration des APIs et création d'interfaces utilisateur dynamiques pour la gestion des tournois.</p>
+      </div>
+    </div>
+
+    <div class="competence-item">
+      <div class="competence-icon">
+        <i class="fas fa-tachometer-alt"></i>
+      </div>
+      <div class="competence-content">
+        <h4>Optimiser des applications informatiques</h4>
+        <p>Optimisation des performances de la plateforme, amélioration des temps de chargement et optimisation des requêtes pour gérer de nombreux utilisateurs simultanés.</p>
+      </div>
+    </div>
+
+    <div class="competence-item">
+      <div class="competence-icon">
+        <i class="fas fa-network-wired"></i>
+      </div>
+      <div class="competence-content">
+        <h4>Administrer des systèmes informatiques communicants complexes</h4>
+        <p>Configuration des serveurs web, gestion des bases de données et mise en place de systèmes de communication en temps réel pour les notifications.</p>
+      </div>
+    </div>
+
+    <div class="competence-item">
+      <div class="competence-icon">
+        <i class="fas fa-database"></i>
+      </div>
+      <div class="competence-content">
+        <h4>Gérer des données de l'information</h4>
+        <p>Conception et gestion de bases de données relationnelles, traitement des statistiques de joueurs et optimisation du stockage des données de tournois.</p>
+      </div>
+    </div>
+
+    <div class="competence-item">
+      <div class="competence-icon">
+        <i class="fas fa-project-diagram"></i>
+      </div>
+      <div class="competence-content">
+        <h4>Conduire un projet</h4>
+        <p>Planification et coordination du développement de la plateforme, gestion des phases de conception, développement et déploiement du projet web.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
       <div class="content-section">
         <div class="video-section">
           <h2 class="video-title"><i class="fas fa-play-circle"></i> Démonstration du site</h2>
@@ -431,3 +594,54 @@
 
 </body>
 </html>
+<script>
+  // Animations pour la page Challenger
+  document.addEventListener('DOMContentLoaded', function() {
+    
+    // Intersection Observer pour les sections
+    const sections = document.querySelectorAll('.content-section');
+    
+    const sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate');
+        }
+      });
+    }, {
+      threshold: 0.2,
+      rootMargin: '0px 0px -50px 0px'
+    });
+    
+    sections.forEach(section => {
+      sectionObserver.observe(section);
+    });
+    
+    // Animation des compétences au hover
+    const competenceItems = document.querySelectorAll('.competence-item');
+    competenceItems.forEach(item => {
+      item.addEventListener('mouseenter', function() {
+        const icon = this.querySelector('.competence-icon');
+        icon.style.transform = 'scale(1.15) rotate(10deg)';
+      });
+      
+      item.addEventListener('mouseleave', function() {
+        const icon = this.querySelector('.competence-icon');
+        icon.style.transform = 'scale(1) rotate(0deg)';
+      });
+    });
+    
+    // Animation des feature items
+    const featureItems = document.querySelectorAll('.feature-item');
+    featureItems.forEach(item => {
+      item.addEventListener('mouseenter', function() {
+        const icon = this.querySelector('i');
+        icon.style.transform = 'scale(1.2) rotate(360deg)';
+      });
+      
+      item.addEventListener('mouseleave', function() {
+        const icon = this.querySelector('i');
+        icon.style.transform = 'scale(1) rotate(0deg)';
+      });
+    });
+  });
+</script>
